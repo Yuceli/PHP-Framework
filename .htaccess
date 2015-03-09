@@ -1,0 +1,28 @@
+options +FollowSymLinks
+
+<ifmodule mod_rewrite.c>
+RewriteEngine On
+
+
+#Si la url solicitada no es un archivo (existente), continuar...
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#Si la url solicitada no es una carpeta(existente), continuar...
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#Se toma todo ese -query_string- y se pasa como parametro ruta
+RewriteRule ^(.*)$ index.php?ruta=$1 [L,QSA]
+
+</ifmodule>
+
+
+#Con este modulo se reduce el tiempo de carga hasta un 40%
+<IfModule mod_deflate.c>
+
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+    AddOutputFilterByType DEFLATE application/xhtml+xml application/rss+xml application/atom+xml
+    AddOutputFilterByType DEFLATE image/x-icon image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype
+
+</Ifmodule>
